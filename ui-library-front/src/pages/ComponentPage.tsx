@@ -80,6 +80,7 @@ export default function ComponentPage() {
   const [pointRadius, setPointRadius] = useState(6);
   const [tableData, setTableData] = useState<SpreadsheetData | null>(null);
   const [tableValidation, setTableValidation] = useState<SpreadsheetValidationMessage[]>([]);
+  const [tableViewMode, setTableViewMode] = useState<'app' | 'spreadsheet'>('spreadsheet');
 
   useEffect(() => {
     if (!baseItem) return;
@@ -124,6 +125,7 @@ export default function ComponentPage() {
     }
     if (baseItem.previewType === 'spreadsheet' && baseItem.previewData.spreadsheet) {
       setTableData(JSON.parse(JSON.stringify(baseItem.previewData.spreadsheet)));
+      setTableViewMode(baseItem.slug === 'financial-planning-table' ? 'app' : 'spreadsheet');
     }
   }, [baseItem]);
 
@@ -200,7 +202,7 @@ export default function ComponentPage() {
           <ValidationAlert title={locale === 'ru' ? 'Ошибки валидации' : 'Validation errors'} messages={allErrors} variant="error" />
           <ValidationAlert title={locale === 'ru' ? 'Предупреждения' : 'Warnings'} messages={warnings} variant="warning" />
           <div className="component-preview-surface">
-            <ChartPreview item={item} height={height} editable={item.previewType === 'spreadsheet'} locale={locale} onTableChange={(next) => setTableData(next)} onValidationChange={setTableValidation} />
+            <ChartPreview item={item} height={height} editable={item.previewType === 'spreadsheet'} locale={locale} tableViewMode={tableViewMode} onTableChange={(next) => setTableData(next)} onValidationChange={setTableValidation} />
           </div>
         </section>
         <aside className="component-controls">
@@ -218,7 +220,7 @@ export default function ComponentPage() {
             {item.previewType === 'scatter' && <label className="form-field"><span>{locale === 'ru' ? 'Радиус точки' : 'Point radius'}</span><input type="number" min="1" value={pointRadius} onChange={(e) => setPointRadius(Number(e.target.value))} /></label>}
             {item.previewType === 'bar' && <><label className="form-field"><span>Y min</span><input type="number" value={barMinY} onChange={(e) => setBarMinY(Number(e.target.value))} /></label><label className="form-field"><span>Y max</span><input type="number" value={barMaxY} onChange={(e) => setBarMaxY(Number(e.target.value))} /></label></>}
             {item.previewType === 'radar' && <label className="form-field"><span>{locale === 'ru' ? 'Максимум шкалы' : 'Max scale'}</span><input type="number" min="1" value={radarMax} onChange={(e) => setRadarMax(Number(e.target.value))} /></label>}
-            {item.previewType === 'spreadsheet' && <div className="component-helper-box"><p>{locale === 'ru' ? 'Таблица поддерживает:' : 'Table supports:'}</p><ul><li>{locale === 'ru' ? 'добавление и удаление строк/столбцов' : 'add and delete rows/columns'}</li><li>{locale === 'ru' ? 'объединение и разъединение ячеек' : 'merge and unmerge cells'}</li><li>{locale === 'ru' ? 'формулы SUM / AVG / MIN / MAX' : 'SUM / AVG / MIN / MAX formulas'}</li><li>{locale === 'ru' ? 'валидацию процентов и числовых колонок' : 'validation for percent and numeric columns'}</li></ul></div>}
+            {item.previewType === 'spreadsheet' && <div className="component-helper-box"><p>{locale === 'ru' ? 'Вид таблицы:' : 'Table view:'}</p><div className="segmented-control"><button type="button" className={tableViewMode === 'spreadsheet' ? 'active' : ''} onClick={() => setTableViewMode('spreadsheet')}>{locale === 'ru' ? 'С координатами' : 'With coordinates'}</button><button type="button" className={tableViewMode === 'app' ? 'active' : ''} onClick={() => setTableViewMode('app')}>{locale === 'ru' ? 'Для сайта' : 'Website view'}</button></div><ul><li>{locale === 'ru' ? 'формулы вводятся в ячейку или строку fx' : 'formulas can be entered in a cell or the fx bar'}</li><li>{locale === 'ru' ? 'диапазон выделяется только при зажатой левой кнопке мыши' : 'range selection works only while holding the left mouse button'}</li><li>{locale === 'ru' ? 'доступны SUM / AVG / MIN / MAX / NPV / PMT' : 'SUM / AVG / MIN / MAX / NPV / PMT are available'}</li></ul></div>}
           </div>
           <div className="sidebar-box component-doc-box">
             <h3>{locale === 'ru' ? 'Документация' : 'Documentation'}</h3>

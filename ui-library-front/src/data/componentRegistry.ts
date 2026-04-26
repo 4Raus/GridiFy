@@ -6,7 +6,7 @@ export type LocalizedText = {
 };
 
 export type ComponentSection = 'tokens' | 'base-components' | 'forms' | 'tables' | 'charts' | 'diagrams';
-export type PreviewType = 'radar' | 'bar' | 'line' | 'scatter' | 'forecast' | 'pie' | 'spreadsheet';
+export type PreviewType = 'radar' | 'bar' | 'line' | 'scatter' | 'forecast' | 'pie' | 'spreadsheet' | 'buttons' | 'oilgas-form' | 'scroll-panel';
 
 export type LibraryComponentItem = {
   slug: string;
@@ -81,6 +81,55 @@ const financialSpreadsheetData: SpreadsheetData = {
 };
 
 export const componentRegistry: LibraryComponentItem[] = [
+
+  {
+    slug: 'button-system',
+    previewType: 'buttons',
+    section: 'base-components',
+    tags: ['button', 'states', 'actions'],
+    status: 'ready',
+    npmName: '@gridify/button',
+    figmaName: 'Button System',
+    title: { ru: 'Кнопки', en: 'Buttons' },
+    shortDescription: { ru: 'Основные состояния кнопок для бизнес-интерфейсов.', en: 'Core button states for business interfaces.' },
+    description: { ru: 'Набор кнопок: primary, secondary, outline, ghost, danger, success, loading и disabled. Подходит для форм, таблиц и панелей управления.', en: 'A button set: primary, secondary, outline, ghost, danger, success, loading, and disabled. Suitable for forms, tables, and control panels.' },
+    dataExample: 'variant: primary | secondary | outline | ghost | danger | success',
+    formula: { ru: 'Для action-кнопок обязательна проверка disabled/loading состояний.', en: 'Action buttons require disabled/loading state handling.' },
+    code: { react: `<GridifyButton variant="primary">Save</GridifyButton>` },
+    previewData: {},
+  },
+  {
+    slug: 'oilgas-inspection-form',
+    previewType: 'oilgas-form',
+    section: 'forms',
+    tags: ['form', 'validation', 'oilgas'],
+    status: 'ready',
+    npmName: '@gridify/oilgas-inspection-form',
+    figmaName: 'Oil & Gas Inspection Form',
+    title: { ru: 'Форма нефтегазового контроля', en: 'Oil & gas inspection form' },
+    shortDescription: { ru: 'Форма с отраслевой валидацией параметров.', en: 'A form with domain-specific parameter validation.' },
+    description: { ru: 'Пример формы для заполнения параметров скважины: давление, температура, дебит, H₂S и статус контроля. Показывает ошибки рядом с компонентом.', en: 'An example form for well parameters: pressure, temperature, flow rate, H₂S, and inspection status. Displays validation errors near the component.' },
+    dataExample: 'pressure: 0–250 bar; temperature: -60…180 °C; H₂S <= 10 ppm',
+    formula: { ru: 'Поля с числовыми значениями не принимают текстовые данные.', en: 'Numeric fields do not accept text data.' },
+    code: { react: `<OilGasInspectionForm />` },
+    previewData: {},
+  },
+  {
+    slug: 'scroll-panel',
+    previewType: 'scroll-panel',
+    section: 'base-components',
+    tags: ['scroll', 'panel', 'log'],
+    status: 'ready',
+    npmName: '@gridify/scroll-panel',
+    figmaName: 'Scroll Panel',
+    title: { ru: 'Скролл-панель', en: 'Scroll panel' },
+    shortDescription: { ru: 'Прокручиваемый блок для логов, списков и навигации.', en: 'A scrollable block for logs, lists, and navigation.' },
+    description: { ru: 'Компонент для длинных списков внутри dashboard: журналы операций, события, проверки, уведомления и категории.', en: 'A component for long dashboard lists: operation logs, events, checks, notifications, and categories.' },
+    dataExample: 'max-height + overflow-y + sticky header',
+    formula: { ru: 'Сохраняет компактность страницы при большом числе записей.', en: 'Keeps the page compact with many records.' },
+    code: { react: `<ScrollPanel items={items} />` },
+    previewData: {},
+  },
   {
     slug: 'spreadsheet-table',
     previewType: 'spreadsheet',

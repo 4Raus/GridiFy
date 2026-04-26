@@ -1,4 +1,5 @@
 import type { LibraryComponentItem } from '../../data/componentRegistry';
+import type { SpreadsheetViewMode } from '../tables/SpreadsheetTable';
 import GroupedBarChart from '../charts/GroupedBarChart';
 import LineTrendChart from '../charts/LineTrendChart';
 import PieDonutChart from '../charts/PieDonutChart';
@@ -6,6 +7,9 @@ import RadarVotesChart from '../charts/RadarVotesChart';
 import ScatterPlotChart from '../charts/ScatterPlotChart';
 import ForecastLineChart from '../charts/ForecastLineChart';
 import SpreadsheetTable from '../tables/SpreadsheetTable';
+import ButtonShowcase from '../ui/ButtonShowcase';
+import OilGasInspectionForm from '../ui/OilGasInspectionForm';
+import ScrollPanelShowcase from '../ui/ScrollPanelShowcase';
 
 type Props = {
   item: LibraryComponentItem;
@@ -14,9 +18,10 @@ type Props = {
   locale?: 'ru' | 'en';
   onTableChange?: (next: NonNullable<LibraryComponentItem['previewData']['spreadsheet']>) => void;
   onValidationChange?: (messages: { level: 'error' | 'warning'; message: string }[]) => void;
+  tableViewMode?: SpreadsheetViewMode;
 };
 
-export default function ChartPreview({ item, height = 280, editable = false, locale = 'ru', onTableChange, onValidationChange }: Props) {
+export default function ChartPreview({ item, height = 280, editable = false, locale = 'ru', onTableChange, onValidationChange, tableViewMode }: Props) {
   if (item.previewType === 'bar' && item.previewData.bar) {
     return <GroupedBarChart labels={item.previewData.bar.labels} datasets={item.previewData.bar.datasets} minY={item.previewData.bar.minY} maxY={item.previewData.bar.maxY} height={height} />;
   }
@@ -36,7 +41,10 @@ export default function ChartPreview({ item, height = 280, editable = false, loc
     return <RadarVotesChart labels={item.previewData.radar.labels} values={item.previewData.radar.values} datasetLabel={item.previewData.radar.datasetLabel} maxValue={item.previewData.radar.maxValue} borderColor={item.previewData.radar.color} pointColor={item.previewData.radar.color} backgroundColor={`${item.previewData.radar.color}22`} height={height} />;
   }
   if (item.previewType === 'spreadsheet' && item.previewData.spreadsheet) {
-    return <SpreadsheetTable data={item.previewData.spreadsheet} height={height} editable={editable} locale={locale} onChange={onTableChange} onValidationChange={onValidationChange} />;
+    return <SpreadsheetTable data={item.previewData.spreadsheet} height={height} editable={editable} locale={locale} viewMode={tableViewMode ?? (item.slug === 'financial-planning-table' ? 'app' : 'spreadsheet')} onChange={onTableChange} onValidationChange={onValidationChange} />;
   }
+  if (item.previewType === 'buttons') return <ButtonShowcase locale={locale} />;
+  if (item.previewType === 'oilgas-form') return <OilGasInspectionForm locale={locale} />;
+  if (item.previewType === 'scroll-panel') return <ScrollPanelShowcase locale={locale} />;
   return null;
 }
