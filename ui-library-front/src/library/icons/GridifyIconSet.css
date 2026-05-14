@@ -1,0 +1,65 @@
+.gridify-icon-set {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  gap: 12px;
+  width: min(100%, 620px);
+  padding: 16px;
+  border: 1px dashed color-mix(in srgb, #8b5cf6 65%, transparent);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--panel-strong) 88%, transparent);
+}
+
+.gridify-icon-set__item {
+  min-height: 72px;
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.gridify-icon-set__item.is-active {
+  border-color: color-mix(in srgb, var(--brand) 54%, var(--border));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 34%, transparent);
+}
+
+.gridify-icon {
+  --icon-tone: #64748b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  color: var(--icon-tone);
+}
+
+.gridify-icon svg {
+  width: 72%;
+  height: 72%;
+}
+
+.gridify-icon--neutral { --icon-tone: #64748b; }
+.gridify-icon--info { --icon-tone: #2563eb; }
+.gridify-icon--warning { --icon-tone: #d97706; }
+.gridify-icon--error { --icon-tone: #e11d48; }
+.gridify-icon--success { --icon-tone: #16a34a; }
+.gridify-icon--brand { --icon-tone: var(--brand-strong); }
+
+.gridify-icon--solid {
+  background: var(--icon-tone);
+  color: #fff;
+}
+
+.gridify-icon--soft {
+  background: color-mix(in srgb, var(--icon-tone) 14%, transparent);
+}
+
+.gridify-icon--outline {
+  border: 1px solid color-mix(in srgb, var(--icon-tone) 54%, transparent);
+  background: transparent;
+}

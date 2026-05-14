@@ -1,0 +1,45 @@
+.tag-badge {
+  --tag-color: #64748b;
+  --tag-bg-mix: 10%;
+  --tag-border-mix: 24%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 22px;
+  border: 1px solid color-mix(in srgb, var(--tag-color) var(--tag-border-mix), transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tag-color) var(--tag-bg-mix), transparent);
+  color: color-mix(in srgb, var(--tag-color) 78%, var(--text));
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tag-badge--sm {
+  padding: 0 9px;
+  font-size: 11px;
+}
+
+.tag-badge--md {
+  min-height: 28px;
+  padding: 0 11px;
+  font-size: 12px;
+}
+
+.tag-badge--status-ready { --tag-color: #16a34a; }
+.tag-badge--status-beta { --tag-color: #2563eb; }
+.tag-badge--status-development { --tag-color: #d97706; }
+.tag-badge--status-review { --tag-color: #7c3aed; }
+.tag-badge--status-planned { --tag-color: #64748b; }
+.tag-badge--status-deprecated { --tag-color: #b91c1c; }
+.tag-badge--group { --tag-color: var(--brand-strong); }
+.tag-badge--author { --tag-color: #4f46e5; }
+.tag-badge--neutral { --tag-color: #64748b; }
+
+:root[data-theme='dark'] .tag-badge {
+  --tag-bg-mix: 16%;
+  --tag-border-mix: 30%;
+  color: color-mix(in srgb, var(--tag-color) 62%, var(--text));
+}

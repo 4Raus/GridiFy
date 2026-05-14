@@ -1,0 +1,89 @@
+.gridify-input-showcase {
+  width: min(100%, 420px);
+}
+
+.gridify-input-showcase--grid {
+  width: min(100%, 760px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 28px 54px;
+  padding: 20px;
+  border: 1px dashed color-mix(in srgb, #8b5cf6 65%, transparent);
+  border-radius: 18px;
+  background: var(--panel-strong);
+}
+
+.gridify-input {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  color: var(--text);
+}
+
+.gridify-input__label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.gridify-input input {
+  width: 100%;
+  min-height: var(--input-height);
+  border: 1px solid var(--input-border, var(--border));
+  border-radius: 8px;
+  background: var(--input-bg, var(--panel-strong));
+  color: var(--text);
+  padding: 0 var(--input-padding);
+  font: inherit;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.gridify-input--sm { --input-height: 34px; --input-padding: 12px; font-size: 13px; }
+.gridify-input--md { --input-height: 42px; --input-padding: 14px; font-size: 14px; }
+.gridify-input--lg { --input-height: 50px; --input-padding: 16px; font-size: 15px; }
+
+.gridify-input--hover input,
+.gridify-input input:hover:not(:disabled) {
+  --input-border: #94a3b8;
+}
+
+.gridify-input--focus input,
+.gridify-input input:focus {
+  --input-border: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.16);
+}
+
+.gridify-input--filled input {
+  --input-border: #cbd5e1;
+}
+
+.gridify-input--disabled input,
+.gridify-input input:disabled {
+  --input-bg: color-mix(in srgb, var(--panel-muted) 78%, transparent);
+  color: color-mix(in srgb, var(--muted) 55%, transparent);
+  cursor: not-allowed;
+}
+
+.gridify-input--error input {
+  --input-border: #ff4d6d;
+}
+
+.gridify-input__message {
+  min-height: 16px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.gridify-input--error .gridify-input__message {
+  color: #ff1744;
+}
+
+@media (max-width: 720px) {
+  .gridify-input-showcase--grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 12px;
+  }
+}

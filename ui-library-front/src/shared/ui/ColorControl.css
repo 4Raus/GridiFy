@@ -1,0 +1,73 @@
+.color-control {
+  display: grid;
+  gap: 8px;
+}
+
+.color-control__label,
+.color-list-control__head span {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.color-control__presets {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.color-control__presets button {
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: 28px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  cursor: pointer;
+}
+
+.color-control__presets button.active {
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--panel-strong), 0 0 0 4px var(--brand);
+}
+
+.color-control__inputs {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.color-control__inputs input[type='color'] {
+  width: 48px;
+  height: 42px;
+  padding: 4px;
+}
+
+.color-control__error {
+  color: #dc2626;
+  line-height: 1.35;
+}
+
+.color-list-control {
+  display: grid;
+  gap: 10px;
+}
+
+.color-list-control__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.color-list-control__items {
+  display: grid;
+  gap: 12px;
+}
+
+.color-list-control__item {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel-muted);
+}

@@ -1,0 +1,172 @@
+.gridify-action-button {
+  --button-accent: var(--brand);
+  --button-accent-strong: var(--brand-strong);
+  --button-on-accent: #122004;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.gridify-action-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+}
+
+.gridify-action-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.gridify-action-button--full {
+  width: 100%;
+}
+
+.gridify-action-button--sm {
+  min-height: 28px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.gridify-action-button--md {
+  min-height: 36px;
+  padding: 9px 14px;
+  font-size: 14px;
+}
+
+.gridify-action-button--lg {
+  min-height: 44px;
+  padding: 12px 18px;
+  font-size: 15px;
+}
+
+.gridify-action-button--neutral {
+  --button-accent: #111827;
+  --button-accent-strong: #030712;
+  --button-on-accent: #ffffff;
+}
+
+.gridify-action-button--brand {
+  --button-accent: var(--brand);
+  --button-accent-strong: var(--brand-strong);
+  --button-on-accent: #11200a;
+}
+
+.gridify-action-button--success {
+  --button-accent: #16a34a;
+  --button-accent-strong: #15803d;
+  --button-on-accent: #ffffff;
+}
+
+.gridify-action-button--warning {
+  --button-accent: #f59e0b;
+  --button-accent-strong: #d97706;
+  --button-on-accent: #1f1300;
+}
+
+.gridify-action-button--danger {
+  --button-accent: #dc2626;
+  --button-accent-strong: #b91c1c;
+  --button-on-accent: #ffffff;
+}
+
+.gridify-action-button--solid {
+  background: var(--button-accent);
+  border-color: var(--button-accent);
+  color: var(--button-on-accent);
+}
+
+.gridify-action-button--soft {
+  background: color-mix(in srgb, var(--button-accent) 16%, transparent);
+  border-color: color-mix(in srgb, var(--button-accent) 26%, transparent);
+  color: var(--button-accent-strong);
+}
+
+.gridify-action-button--outline {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--button-accent) 46%, var(--border));
+  color: var(--button-accent-strong);
+}
+
+.gridify-action-button--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--button-accent-strong);
+}
+
+.gridify-action-button__brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 16px;
+  padding: 0 5px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.28);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.gridify-action-button--soft .gridify-action-button__brand,
+.gridify-action-button--outline .gridify-action-button__brand,
+.gridify-action-button--ghost .gridify-action-button__brand {
+  background: color-mix(in srgb, var(--button-accent) 14%, transparent);
+}
+
+.gridify-action-button__slot,
+.gridify-action-button__trailing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.gridify-action-button__content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gridify-action-button__spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: gridifyActionSpin 0.8s linear infinite;
+}
+
+.gridify-action-button-demo {
+  display: grid;
+  place-items: center;
+  width: min(100%, 520px);
+  padding: 20px;
+}
+
+.gridify-action-button-demo__icon,
+.gridify-action-button-demo__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+}
+
+.gridify-action-button-demo__badge {
+  min-width: 18px;
+  min-height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.32);
+  font-size: 11px;
+}
+
+@keyframes gridifyActionSpin {
+  to { transform: rotate(360deg); }
+}

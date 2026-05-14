@@ -1,0 +1,63 @@
+.copyable-block {
+  position: relative;
+  cursor: pointer;
+  border-radius: 14px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.copyable-block:hover {
+  border-color: rgba(132, 204, 22, 0.42);
+}
+
+.copyable-block:focus-visible {
+  outline: 3px solid rgba(132, 204, 22, 0.45);
+  outline-offset: 3px;
+}
+
+.copyable-block--inline {
+  display: inline-flex;
+  align-items: center;
+}
+
+.copyable-block--code > pre {
+  padding-right: 56px;
+}
+
+.copyable-block__icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  background: transparent;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+.copyable-block--code .copyable-block__icon {
+  top: 12px;
+  transform: none;
+}
+
+.copyable-block__icon svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
+.copyable-block:hover .copyable-block__icon,
+.copyable-block:focus-visible .copyable-block__icon {
+  color: var(--brand-strong);
+  background: color-mix(in srgb, var(--brand-strong) 10%, transparent);
+}
+
+.copyable-block.is-copied .copyable-block__icon {
+  color: #16a34a;
+  background: color-mix(in srgb, #16a34a 12%, transparent);
+}

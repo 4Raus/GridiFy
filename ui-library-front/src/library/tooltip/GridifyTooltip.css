@@ -1,0 +1,154 @@
+.gridify-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.gridify-tooltip__trigger {
+  display: inline-flex;
+}
+
+.gridify-tooltip__bubble {
+  --tooltip-bg: #fff;
+  --tooltip-border: #bfdbfe;
+  --tooltip-text: #1f2937;
+  --tooltip-shadow: 0 14px 30px rgba(59, 130, 246, 0.24);
+  position: absolute;
+  z-index: 20;
+  display: block;
+  padding: 12px 14px;
+  border: 1px solid var(--tooltip-border);
+  border-radius: 8px;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-text);
+  box-shadow: var(--tooltip-shadow);
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(-50%, -8px, 0);
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.gridify-tooltip__bubble::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--tooltip-bg);
+  border: 1px solid var(--tooltip-border);
+  transform: rotate(45deg);
+}
+
+.gridify-tooltip[data-theme='dark'] .gridify-tooltip__bubble {
+  --tooltip-bg: #07062a;
+  --tooltip-border: #d946ef;
+  --tooltip-text: #f8fafc;
+  --tooltip-shadow: 0 14px 30px rgba(217, 70, 239, 0.18);
+}
+
+.gridify-tooltip__bubble.is-visible {
+  opacity: 1;
+  transform: translate3d(-50%, 0, 0);
+}
+
+.gridify-tooltip__bubble.is-multiline {
+  white-space: normal;
+}
+
+.gridify-tooltip:not([data-placement]) .gridify-tooltip__bubble,
+.gridify-tooltip[data-placement^='top'] .gridify-tooltip__bubble {
+  bottom: calc(100% + 12px);
+  left: 50%;
+}
+
+.gridify-tooltip[data-placement^='bottom'] .gridify-tooltip__bubble {
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translate3d(-50%, 8px, 0);
+}
+
+.gridify-tooltip[data-placement^='bottom'] .gridify-tooltip__bubble.is-visible {
+  transform: translate3d(-50%, 0, 0);
+}
+
+.gridify-tooltip[data-placement^='left'] .gridify-tooltip__bubble {
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translate3d(-8px, -50%, 0);
+}
+
+.gridify-tooltip[data-placement^='left'] .gridify-tooltip__bubble.is-visible {
+  transform: translate3d(0, -50%, 0);
+}
+
+.gridify-tooltip[data-placement^='right'] .gridify-tooltip__bubble {
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translate3d(8px, -50%, 0);
+}
+
+.gridify-tooltip[data-placement^='right'] .gridify-tooltip__bubble.is-visible {
+  transform: translate3d(0, -50%, 0);
+}
+
+.gridify-tooltip[data-placement$='start'][data-placement^='top'] .gridify-tooltip__bubble,
+.gridify-tooltip[data-placement$='start'][data-placement^='bottom'] .gridify-tooltip__bubble { left: 0; transform: translate3d(0, -8px, 0); }
+.gridify-tooltip[data-placement$='start'][data-placement^='bottom'] .gridify-tooltip__bubble { transform: translate3d(0, 8px, 0); }
+.gridify-tooltip[data-placement$='start'][data-placement^='top'] .gridify-tooltip__bubble.is-visible,
+.gridify-tooltip[data-placement$='start'][data-placement^='bottom'] .gridify-tooltip__bubble.is-visible { transform: translate3d(0, 0, 0); }
+
+.gridify-tooltip[data-placement$='end'][data-placement^='top'] .gridify-tooltip__bubble,
+.gridify-tooltip[data-placement$='end'][data-placement^='bottom'] .gridify-tooltip__bubble { left: auto; right: 0; transform: translate3d(0, -8px, 0); }
+.gridify-tooltip[data-placement$='end'][data-placement^='bottom'] .gridify-tooltip__bubble { transform: translate3d(0, 8px, 0); }
+.gridify-tooltip[data-placement$='end'][data-placement^='top'] .gridify-tooltip__bubble.is-visible,
+.gridify-tooltip[data-placement$='end'][data-placement^='bottom'] .gridify-tooltip__bubble.is-visible { transform: translate3d(0, 0, 0); }
+
+.gridify-tooltip[data-placement$='start'][data-placement^='left'] .gridify-tooltip__bubble,
+.gridify-tooltip[data-placement$='start'][data-placement^='right'] .gridify-tooltip__bubble { top: 0; transform: translate3d(8px, 0, 0); }
+.gridify-tooltip[data-placement$='start'][data-placement^='left'] .gridify-tooltip__bubble { transform: translate3d(-8px, 0, 0); }
+.gridify-tooltip[data-placement$='start'][data-placement^='left'] .gridify-tooltip__bubble.is-visible,
+.gridify-tooltip[data-placement$='start'][data-placement^='right'] .gridify-tooltip__bubble.is-visible { transform: translate3d(0, 0, 0); }
+
+.gridify-tooltip[data-placement$='end'][data-placement^='left'] .gridify-tooltip__bubble,
+.gridify-tooltip[data-placement$='end'][data-placement^='right'] .gridify-tooltip__bubble { top: auto; bottom: 0; transform: translate3d(8px, 0, 0); }
+.gridify-tooltip[data-placement$='end'][data-placement^='left'] .gridify-tooltip__bubble { transform: translate3d(-8px, 0, 0); }
+.gridify-tooltip[data-placement$='end'][data-placement^='left'] .gridify-tooltip__bubble.is-visible,
+.gridify-tooltip[data-placement$='end'][data-placement^='right'] .gridify-tooltip__bubble.is-visible { transform: translate3d(0, 0, 0); }
+
+.gridify-tooltip[data-placement^='top'] .gridify-tooltip__bubble::before { bottom: -6px; left: calc(50% - 5px); border-left: 0; border-top: 0; }
+.gridify-tooltip[data-placement^='bottom'] .gridify-tooltip__bubble::before { top: -6px; left: calc(50% - 5px); border-right: 0; border-bottom: 0; }
+.gridify-tooltip[data-placement^='left'] .gridify-tooltip__bubble::before { right: -6px; top: calc(50% - 5px); border-left: 0; border-bottom: 0; }
+.gridify-tooltip[data-placement^='right'] .gridify-tooltip__bubble::before { left: -6px; top: calc(50% - 5px); border-right: 0; border-top: 0; }
+
+.tooltip-showcase {
+  min-height: 180px;
+  width: min(100%, 760px);
+  display: grid;
+  place-items: center;
+  padding: 42px;
+  border-radius: 18px;
+}
+
+.tooltip-showcase--dark {
+  background: #272727;
+}
+
+.tooltip-showcase--grid {
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 58px 72px;
+  place-items: center;
+}
+
+.tooltip-showcase__anchor {
+  min-width: 116px;
+  min-height: 40px;
+  border: 1px dashed color-mix(in srgb, #8b5cf6 55%, transparent);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .tooltip-showcase { padding: 32px 12px; }
+  .tooltip-showcase--grid { grid-template-columns: 1fr; gap: 48px; }
+}

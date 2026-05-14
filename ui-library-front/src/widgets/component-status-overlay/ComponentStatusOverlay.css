@@ -1,0 +1,128 @@
+.component-status-overlay {
+  position: relative;
+  overflow: hidden;
+  border-radius: inherit;
+  width: 100%;
+}
+
+.component-status-overlay__veil,
+.component-status-overlay__tape,
+.component-status-overlay__ribbon {
+  pointer-events: none;
+}
+
+.component-status-overlay__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: rgba(15, 23, 42, 0.05);
+  backdrop-filter: blur(1px);
+}
+
+.component-status-overlay__tape {
+  position: absolute;
+  left: -12%;
+  right: -12%;
+  height: 34px;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #facc15 0 12px,
+      #111827 12px 24px
+    );
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+}
+
+.component-status-overlay__tape span {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.72);
+  text-align: center;
+}
+
+.component-status-overlay__tape--top {
+  top: 22px;
+  transform: rotate(-8deg);
+}
+
+.component-status-overlay__tape--bottom {
+  bottom: 22px;
+  transform: rotate(8deg);
+}
+
+.component-status-overlay__ribbon {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
+  max-width: min(72%, 360px);
+  padding: 8px 12px;
+  border: 1px solid color-mix(in srgb, #7c3aed 28%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, #7c3aed 14%, var(--panel-strong));
+  color: color-mix(in srgb, #7c3aed 72%, var(--text));
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12);
+}
+
+.component-status-overlay--planned .component-status-overlay__veil {
+  background: rgba(100, 116, 139, 0.1);
+}
+
+.catalog-card__preview .component-status-overlay {
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+}
+
+.component-preview-surface > .component-status-overlay {
+  min-height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.component-preview-surface--table > .component-status-overlay {
+  display: block;
+}
+
+@media (max-width: 720px) {
+  .component-status-overlay__tape {
+    left: -18%;
+    right: -18%;
+    height: 28px;
+    font-size: 9px;
+  }
+
+  .component-status-overlay__tape--top {
+    top: 18px;
+    transform: rotate(-6deg);
+  }
+
+  .component-status-overlay__tape--bottom {
+    bottom: 18px;
+    transform: rotate(6deg);
+  }
+
+  .component-status-overlay__ribbon {
+    top: 10px;
+    right: 10px;
+    max-width: calc(100% - 20px);
+    font-size: 11px;
+  }
+}
