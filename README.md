@@ -384,7 +384,7 @@ GridiFy/
 
 ## Сценарий использования и архитектурные схемы
 
-В этом разделе показаны основные схемы работы GridiFy: путь пользователя, сценарии использования, внутренняя архитектура, последовательность открытия компонента, жизненный цикл компонента и логическая модель данных каталога.
+В этом разделе показаны основные схемы работы GridiFy: путь пользователя, сценарии использования, архитектура проекта, последовательность открытия компонента, жизненный цикл компонента и логическая модель каталога.
 
 Диаграммы написаны в формате Mermaid, поэтому они отображаются прямо в GitHub README.
 
@@ -392,56 +392,58 @@ GridiFy/
 
 ### User Way
 
-Диаграмма показывает путь пользователя от открытия главной страницы до выбора компонента, изменения параметров и копирования готового кода.
+Диаграмма показывает общий путь пользователя: от входа на сайт до выбора компонента, настройки параметров и копирования кода.
 
 ```mermaid
-journey
-    title User Way: путь пользователя в GridiFy
-    section Знакомство
-      Открывает главную страницу: 5: Пользователь
-      Изучает назначение библиотеки: 4: Пользователь
-      Переходит в каталог компонентов: 5: Пользователь
-    section Поиск компонента
-      Использует поиск и фильтры: 4: Пользователь
-      Открывает карточку компонента: 5: Пользователь
-      Переходит на страницу компонента: 5: Пользователь
-    section Работа с компонентом
-      Просматривает preview: 5: Пользователь
-      Меняет параметры в playground: 5: Пользователь
-      Проверяет ошибки и состояния: 4: Пользователь
-      Изучает props и документацию: 5: Пользователь
-    section Использование
-      Копирует React TSX или Props JSON: 5: Пользователь
-      Использует код в своём проекте: 5: Пользователь
+flowchart TD
+    A["Главная страница"] --> B["Каталог<br/>компонентов"]
+    B --> C["Поиск<br/>и фильтры"]
+    C --> D["Карточка<br/>компонента"]
+    D --> E["Страница<br/>компонента"]
+
+    E --> F["Preview"]
+    E --> G["Playground"]
+    E --> H["Docs"]
+    E --> I["Code"]
+
+    G --> J["Изменение<br/>параметров"]
+    J --> K["Проверка<br/>ошибок"]
+    K --> L["Обновление<br/>preview"]
+    L --> M["Обновление<br/>кода"]
+
+    I --> N["Copy<br/>React TSX"]
+    I --> O["Copy<br/>Props JSON"]
+
+    N --> P["Использование<br/>в проекте"]
+    O --> P
 ```
 
 ---
 
 ### Use Case
 
-Диаграмма показывает основные сценарии использования GridiFy текущими пользователями и будущей административной ролью.
+Диаграмма показывает основные сценарии использования GridiFy для разных типов пользователей.
 
 ```mermaid
 flowchart LR
     Visitor["Посетитель"]
     Developer["Разработчик"]
     Designer["Дизайнер"]
-    Admin["Администратор<br/>будущее развитие"]
+    Admin["Администратор<br/>будущее"]
 
-    subgraph System["GridiFy UI Library"]
-        UC1["Открыть главную страницу"]
-        UC2["Просмотреть каталог"]
-        UC3["Искать компонент"]
-        UC4["Открыть страницу компонента"]
-        UC5["Посмотреть preview"]
-        UC6["Изменить параметры"]
-        UC7["Изучить документацию"]
-        UC8["Скопировать код"]
-        UC9["Переключить тему"]
-        UC10["Переключить язык"]
-        UC11["Создать компонент"]
-        UC12["Редактировать metadata"]
-        UC13["Опубликовать версию"]
+    subgraph G["GridiFy"]
+        UC1["Открыть<br/>главную"]
+        UC2["Смотреть<br/>каталог"]
+        UC3["Искать<br/>компонент"]
+        UC4["Открыть<br/>компонент"]
+        UC5["Смотреть<br/>preview"]
+        UC6["Менять<br/>параметры"]
+        UC7["Читать<br/>docs"]
+        UC8["Копировать<br/>код"]
+        UC9["Сменить<br/>тему"]
+        UC10["Сменить<br/>язык"]
+        UC11["Создать<br/>компонент"]
+        UC12["Опубликовать<br/>версию"]
     end
 
     Visitor --> UC1
@@ -462,98 +464,92 @@ flowchart LR
 
     Admin -.-> UC11
     Admin -.-> UC12
-    Admin -.-> UC13
-
-    UC4 --> UC5
-    UC4 --> UC7
-    UC6 --> UC5
-    UC7 --> UC8
 ```
 
 ---
 
 ### Activity Diagram
 
-Диаграмма описывает процесс открытия страницы компонента: приложение получает `slug`, ищет компонент в registry и отображает preview, playground, code preview и документацию.
+Диаграмма показывает процесс открытия страницы компонента.
 
 ```mermaid
 flowchart TD
-    Start([Старт]) --> OpenPage["Пользователь открывает /library/:slug"]
-    OpenPage --> Router["React Router передаёт slug"]
-    Router --> FindComponent["getComponentBySlug(slug)"]
-    FindComponent --> Decision{"Компонент найден?"}
+    Start([Start]) --> A["Открыть<br/>/library/:slug"]
+    A --> B["Получить<br/>slug"]
+    B --> C["Найти компонент<br/>в registry"]
+    C --> D{"Найден?"}
 
-    Decision -- Да --> LoadMetadata["Загрузить metadata компонента"]
-    LoadMetadata --> LoadPreview["Получить previewType и previewData"]
-    LoadPreview --> RenderHeader["Показать заголовок, описание, статус и теги"]
-    RenderHeader --> RenderPreview["Показать ComponentPreview"]
-    RenderPreview --> RenderPlayground["Показать ComponentPlayground"]
-    RenderPlayground --> RenderCode["Показать CodePreview"]
-    RenderCode --> RenderDocs["Показать ComponentDocs"]
+    D -- "Да" --> E["Загрузить<br/>metadata"]
+    E --> F["Загрузить<br/>previewData"]
+    F --> G["Показать<br/>header"]
+    G --> H["Показать<br/>preview"]
+    H --> I["Показать<br/>playground"]
+    I --> J["Показать<br/>code"]
+    J --> K["Показать<br/>docs"]
 
-    RenderDocs --> UserChanges{"Пользователь меняет параметры?"}
-    UserChanges -- Да --> Validate["Проверить данные playground"]
-    Validate --> HasErrors{"Есть ошибки?"}
-    HasErrors -- Да --> ShowErrors["Показать ValidationAlert"]
-    HasErrors -- Нет --> UpdatePreview["Обновить preview и generated code"]
-    ShowErrors --> RenderPlayground
-    UpdatePreview --> CopyCode["Пользователь копирует код"]
-    UserChanges -- Нет --> CopyCode
-    CopyCode --> End([Конец])
+    K --> L{"Параметры<br/>изменены?"}
+    L -- "Да" --> M["Validation"]
+    M --> N{"Есть<br/>ошибки?"}
 
-    Decision -- Нет --> NotFound["Показать состояние Компонент не найден"]
-    NotFound --> BackToCatalog["Предложить вернуться в каталог"]
-    BackToCatalog --> End
+    N -- "Да" --> O["Показать<br/>alert"]
+    O --> I
+
+    N -- "Нет" --> P["Обновить<br/>preview"]
+    P --> Q["Обновить<br/>code"]
+    Q --> R["Copy code"]
+    L -- "Нет" --> R
+
+    D -- "Нет" --> S["Компонент<br/>не найден"]
+    S --> T["Назад<br/>в каталог"]
+
+    R --> End([End])
+    T --> End
 ```
 
 ---
 
 ### Sequence Diagram
 
-Диаграмма показывает последовательность взаимодействия между пользователем, роутером, registry, preview resolver, playground и генератором кода.
+Диаграмма показывает, как страница компонента получает данные, строит preview и обновляет код при изменении параметров.
 
 ```mermaid
 sequenceDiagram
-    actor User as Пользователь
-    participant Browser as Browser
-    participant Router as React Router
-    participant Page as ComponentDetailsPage
-    participant Registry as Component Registry
-    participant Preview as ComponentPreview
-    participant Library as Library Component
-    participant Playground as ComponentPlayground
-    participant Generator as Code Generator
-    participant Docs as ComponentDocs
+    actor U as User
+    participant R as Router
+    participant P as Page
+    participant Reg as Registry
+    participant Prev as Preview
+    participant Lib as Library
+    participant Play as Playground
+    participant Gen as Generator
+    participant Docs as Docs
 
-    User->>Browser: Открывает /library/:slug
-    Browser->>Router: Передаёт URL
-    Router->>Page: Рендерит страницу с slug
+    U->>R: open /library/:slug
+    R->>P: pass slug
+    P->>Reg: getComponent(slug)
+    Reg-->>P: component item
 
-    Page->>Registry: getComponentBySlug(slug)
-    Registry-->>Page: ComponentRegistryItem
+    alt found
+        P->>Prev: previewType + data
+        Prev->>Lib: select component
+        Lib-->>Prev: render UI
+        Prev-->>P: preview block
 
-    alt Компонент найден
-        Page->>Preview: [Передаёт previewType и previewData]
-        Preview->>Library: Выбирает компонент из src/library
-        Library-->>Preview: JSX preview
-        Preview-->>Page: Готовый preview block
+        P->>Play: state + controls
+        Play-->>P: updated state
 
-        Page->>Playground: Передаёт playground state
-        Playground-->>Page: Обновлённые параметры
+        P->>Gen: generate code
+        Gen-->>P: TSX + JSON
 
-        Page->>Generator: generateComponentCode(item, state)
-        Generator-->>Page: React TSX и Props JSON
+        P->>Docs: metadata
+        Docs-->>P: docs block
 
-        Page->>Docs: Передаёт metadata и docs
-        Docs-->>Page: Документация компонента
-
-        User->>Playground: Меняет параметры
-        Playground-->>Preview: Обновляет preview
-        Playground-->>Generator: Обновляет generated code
-
-        User->>Page: Копирует код
-    else Компонент не найден
-        Page-->>User: Показывает ошибку и ссылку на каталог
+        U->>Play: change props
+        Play-->>Prev: update preview
+        Play-->>Gen: update code
+        U->>P: copy code
+    else not found
+        P-->>U: show not found
     end
 ```
 
@@ -565,132 +561,161 @@ sequenceDiagram
 
 ```mermaid
 flowchart TB
-    subgraph App["src/app"]
-        AppRoot["App.tsx"]
-        Router["router.tsx"]
-        Providers["AppProviders"]
-        ThemeProvider["ThemeProvider"]
-        LocaleProvider["LocaleProvider"]
+    subgraph A["app"]
+        A1["App"]
+        A2["Router"]
+        A3["Providers"]
     end
 
-    subgraph Pages["src/pages"]
-        Landing["LandingPage"]
-        Library["LibraryPage"]
-        Details["ComponentDetailsPage"]
+    subgraph P["pages"]
+        P1["Landing"]
+        P2["Library"]
+        P3["Details"]
     end
 
-    subgraph Widgets["src/widgets"]
-        Header["AppHeader"]
-        CatalogGrid["CatalogGrid"]
-        ComponentPreview["ComponentPreview"]
-        ComponentDocs["ComponentDocs"]
-        ComponentPlayground["ComponentPlayground"]
-        CodePreview["CodePreview"]
-        StatusOverlay["ComponentStatusOverlay"]
+    subgraph W["widgets"]
+        W1["Header"]
+        W2["Catalog"]
+        W3["Preview"]
+        W4["Playground"]
+        W5["Code"]
+        W6["Docs"]
+        W7["Status<br/>Overlay"]
     end
 
-    subgraph Features["src/features"]
-        Search["Component Search"]
-        CodeGenerator["Code Generator"]
-        ChartPlayground["Chart Playground"]
-        SpreadsheetPlayground["Spreadsheet Playground"]
-        Validation["Validation"]
+    subgraph F["features"]
+        F1["Search"]
+        F2["Validation"]
+        F3["Code<br/>Generator"]
+        F4["Chart<br/>Playground"]
+        F5["Table<br/>Playground"]
     end
 
-    subgraph Entities["src/entities"]
-        Registry["Component Registry"]
-        Types["Component Types"]
-        DemoData["Demo Data"]
+    subgraph E["entities"]
+        E1["Registry"]
+        E2["Types"]
+        E3["Demo<br/>Data"]
     end
 
-    subgraph LibraryLayer["src/library"]
-        Buttons["Buttons"]
-        Inputs["Inputs"]
-        Selects["Selects"]
-        Tooltips["Tooltip"]
-        Icons["Icons"]
-        Charts["Charts"]
-        Tables["Tables"]
-        OilGas["OilGas Form"]
-        Feedback["Feedback States"]
+    subgraph L["library"]
+        L1["Buttons"]
+        L2["Inputs"]
+        L3["Selects"]
+        L4["Tooltip"]
+        L5["Icons"]
+        L6["Charts"]
+        L7["Tables"]
+        L8["OilGas"]
+        L9["Feedback"]
     end
 
-    subgraph Shared["src/shared"]
-        SharedUI["Shared UI"]
-        SharedLib["Shared Lib"]
-        SharedTypes["Shared Types"]
-        Config["Config"]
+    subgraph S["shared"]
+        S1["UI"]
+        S2["Lib"]
+        S3["Types"]
+        S4["Config"]
     end
 
-    AppRoot --> Router
-    AppRoot --> Providers
-    Providers --> ThemeProvider
-    Providers --> LocaleProvider
+    A1 --> A2
+    A1 --> A3
 
-    Router --> Landing
-    Router --> Library
-    Router --> Details
+    A2 --> P1
+    A2 --> P2
+    A2 --> P3
 
-    Landing --> Header
-    Library --> CatalogGrid
-    Library --> Search
-    Library --> Registry
+    P1 --> W1
+    P2 --> W2
+    P2 --> F1
+    P2 --> E1
 
-    Details --> Registry
-    Details --> ComponentPreview
-    Details --> ComponentPlayground
-    Details --> CodePreview
-    Details --> ComponentDocs
-    Details --> StatusOverlay
+    P3 --> E1
+    P3 --> W3
+    P3 --> W4
+    P3 --> W5
+    P3 --> W6
+    P3 --> W7
 
-    ComponentPreview --> Buttons
-    ComponentPreview --> Inputs
-    ComponentPreview --> Selects
-    ComponentPreview --> Tooltips
-    ComponentPreview --> Icons
-    ComponentPreview --> Charts
-    ComponentPreview --> Tables
-    ComponentPreview --> OilGas
-    ComponentPreview --> Feedback
+    W3 --> L1
+    W3 --> L2
+    W3 --> L3
+    W3 --> L4
+    W3 --> L5
+    W3 --> L6
+    W3 --> L7
+    W3 --> L8
+    W3 --> L9
 
-    ComponentPlayground --> ChartPlayground
-    ComponentPlayground --> SpreadsheetPlayground
-    CodePreview --> CodeGenerator
-    ComponentPlayground --> Validation
+    W4 --> F2
+    W4 --> F4
+    W4 --> F5
+    W5 --> F3
 
-    Registry --> Types
-    Registry --> DemoData
+    E1 --> E2
+    E1 --> E3
 
-    Widgets --> Shared
-    Features --> Shared
-    LibraryLayer --> Shared
+    W --> S
+    F --> S
+    L --> S
 ```
+
+---
+
+### State Machine
+
+Диаграмма показывает жизненный цикл компонента в каталоге.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Planned
+    Planned --> Development
+    Development --> Review
+    Review --> Beta
+    Review --> Development
+    Beta --> Ready
+    Ready --> Deprecated
+    Deprecated --> Removed
+    Deprecated --> Development
+
+    Planned: Planned
+    Development: In development
+    Review: In review
+    Beta: Beta
+    Ready: Ready
+    Deprecated: Deprecated
+    Removed: Removed
+```
+
+Статусы используются для отображения готовности компонента в каталоге:
+
+| Статус           | Значение                                    |
+| ---------------- | ------------------------------------------- |
+| `ready`          | Компонент готов к использованию             |
+| `beta`           | Компонент доступен, но API может уточняться |
+| `in-development` | Компонент находится в разработке            |
+| `review`         | Компонент проходит проверку                 |
+| `planned`        | Компонент запланирован                      |
+| `deprecated`     | Компонент устаревает                        |
 
 ---
 
 ### ERD
 
-Так как первая версия GridiFy реализована без backend и базы данных, ERD показывает логическую модель данных каталога. Сейчас эта модель хранится в TypeScript registry, но в будущем может быть перенесена в backend и БД.
+Так как первая версия GridiFy реализована без backend и базы данных, ERD показывает логическую модель каталога. Сейчас эта модель хранится в TypeScript registry, но в будущем может быть перенесена в backend и БД.
 
 ```mermaid
 erDiagram
     COMPONENT {
         string slug PK
-        string titleRu
-        string titleEn
-        string titleDe
-        string descriptionRu
-        string descriptionEn
-        string descriptionDe
+        string title
+        string description
         string section
         string previewType
         string status
         string packageName
         string importPath
-        string figmaName
     }
 
-    COMPONENT_USAGE {
+    USAGE {
         string id PK
         string componentSlug FK
         string installCommand
@@ -698,50 +723,40 @@ erDiagram
         string exampleCode
     }
 
-    COMPONENT_DOCS {
+    DOCS {
         string id PK
         string componentSlug FK
-        string overviewRu
-        string overviewEn
-        string overviewDe
+        string overview
         string dataExample
-        string logicRu
-        string logicEn
-        string logicDe
+        string logic
     }
 
-    COMPONENT_PROP {
+    PROP {
         string id PK
         string componentSlug FK
         string name
         string type
         boolean required
         string defaultValue
-        string descriptionRu
-        string descriptionEn
-        string descriptionDe
+        string description
     }
 
-    COMPONENT_ERROR {
+    ERROR_STATE {
         string id PK
         string componentSlug FK
         string code
-        string reasonRu
-        string reasonEn
-        string reasonDe
-        string fixRu
-        string fixEn
-        string fixDe
+        string reason
+        string fix
     }
 
-    COMPONENT_TAG {
+    TAG {
         string id PK
         string componentSlug FK
         string label
         string tone
     }
 
-    COMPONENT_VERSION {
+    VERSION {
         string id PK
         string componentSlug FK
         string version
@@ -757,60 +772,60 @@ erDiagram
         string role
     }
 
-    COMPONENT ||--|| COMPONENT_USAGE : has
-    COMPONENT ||--|| COMPONENT_DOCS : has
-    COMPONENT ||--o{ COMPONENT_PROP : documents
-    COMPONENT ||--o{ COMPONENT_ERROR : validates
-    COMPONENT ||--o{ COMPONENT_TAG : marked_by
-    COMPONENT ||--o{ COMPONENT_VERSION : may_have
-    USER ||--o{ COMPONENT_VERSION : publishes
+    COMPONENT ||--|| USAGE : has
+    COMPONENT ||--|| DOCS : has
+    COMPONENT ||--o{ PROP : props
+    COMPONENT ||--o{ ERROR_STATE : errors
+    COMPONENT ||--o{ TAG : tags
+    COMPONENT ||--o{ VERSION : versions
+    USER ||--o{ VERSION : publishes
 ```
 
 ---
 
 ### Future Backend Flow
 
-Диаграмма показывает возможное развитие проекта: переход от статического TypeScript registry к backend registry с API, базой данных, админкой и версиями компонентов.
+Диаграмма показывает возможное развитие проекта: переход от статического TypeScript registry к backend registry, базе данных, админке и аналитике.
 
 ```mermaid
 flowchart LR
-    subgraph Current["Текущая версия"]
-        StaticRegistry["TypeScript Registry"]
-        ReactComponents["React Components"]
-        StaticDocs["Static Docs"]
+    subgraph C["Current"]
+        C1["TS<br/>Registry"]
+        C2["React<br/>Components"]
+        C3["Static<br/>Docs"]
     end
 
-    subgraph Future["Будущее развитие"]
-        AdminPanel["Admin Panel"]
-        API["Backend API"]
-        DB["Database"]
-        Versions["Component Versions"]
-        Analytics["Usage Analytics"]
+    subgraph FE["Frontend"]
+        F1["Catalog"]
+        F2["Preview"]
+        F3["Playground"]
+        F4["Code<br/>Generator"]
     end
 
-    subgraph Frontend["GridiFy Frontend"]
-        Catalog["Component Catalog"]
-        Preview["Live Preview"]
-        Playground["Playground"]
-        Code["Code Generator"]
+    subgraph BE["Future Backend"]
+        B1["Admin<br/>Panel"]
+        B2["API"]
+        B3["Database"]
+        B4["Versions"]
+        B5["Analytics"]
     end
 
-    StaticRegistry --> Catalog
-    ReactComponents --> Preview
-    StaticDocs --> Code
+    C1 --> F1
+    C2 --> F2
+    C3 --> F4
 
-    AdminPanel -.-> API
-    API -.-> DB
-    DB -.-> Versions
-    API -.-> Analytics
+    F1 --> F2
+    F3 --> F2
+    F3 --> F4
 
-    API -.-> Catalog
-    API -.-> Playground
-    API -.-> Code
+    B1 -.-> B2
+    B2 -.-> B3
+    B3 -.-> B4
+    B2 -.-> B5
 
-    Catalog --> Preview
-    Playground --> Preview
-    Playground --> Code
+    B2 -.-> F1
+    B2 -.-> F3
+    B2 -.-> F4
 ```
 
 
