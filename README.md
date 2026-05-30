@@ -668,33 +668,6 @@ flowchart TB
 
 ---
 
-### State Machine
-
-Диаграмма показывает жизненный цикл компонента в библиотеке.
-
-```mermaid
-stateDiagram-v2
-    [*] --> Planned: компонент запланирован
-    Planned --> InDevelopment: начата разработка
-    InDevelopment --> Review: отправлен на проверку
-    Review --> Beta: принят для демо
-    Review --> InDevelopment: нужны правки
-    Beta --> Ready: стабилизирован API
-    Ready --> Deprecated: компонент устаревает
-    Deprecated --> Removed: удалён из каталога
-    Deprecated --> InDevelopment: переработка компонента
-
-    state Planned as "Planned / Запланировано"
-    state InDevelopment as "In development / В разработке"
-    state Review as "In review / На проверке"
-    state Beta as "Beta / Бета"
-    state Ready as "Ready / Готово"
-    state Deprecated as "Deprecated / Устаревает"
-    state Removed as "Removed / Удалён"
-```
-
----
-
 ### ERD
 
 Так как первая версия GridiFy реализована без backend и базы данных, ERD показывает логическую модель данных каталога. Сейчас эта модель хранится в TypeScript registry, но в будущем может быть перенесена в backend и БД.
