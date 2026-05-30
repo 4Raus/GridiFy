@@ -533,7 +533,7 @@ sequenceDiagram
     Registry-->>Page: ComponentRegistryItem
 
     alt Компонент найден
-        Page->>Preview: Передаёт previewType и previewData
+        Page->>Preview: [Передаёт previewType и previewData]
         Preview->>Library: Выбирает компонент из src/library
         Library-->>Preview: JSX preview
         Preview-->>Page: Готовый preview block
