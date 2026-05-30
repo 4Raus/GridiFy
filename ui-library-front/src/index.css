@@ -13,7 +13,7 @@
     --radius-xl: 32px;
     --radius-lg: 22px;
     --radius-md: 16px;
-    font-family: Inter, Arial, sans-serif;
+    font-family: Open Sans, Inter, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
 }
