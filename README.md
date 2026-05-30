@@ -776,12 +776,6 @@ GitHub Issues: https://github.com/4Raus/GridiFy/issues
 ## Лицензия
 
 ```txt
-License: [указать лицензию, например MIT]
-```
-
-Если проект пока не готов к публичному использованию как open-source библиотека, можно временно указать:
-
-```txt
 All rights reserved until the public package release.
 ```
 
