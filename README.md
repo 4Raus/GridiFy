@@ -758,11 +758,9 @@ GridiFy разрабатывается как учебный, исследова
 ### Контакты
 
 ```txt
-Author / Team: [указать имя или название команды]
-Email: [указать email]
-Telegram: [указать Telegram]
-GitHub: https://github.com/4Raus
-Figma: [указать ссылку на макет]
+Authors / Team: Александра и Анастасия
+Telegram: @whatdouwantm и @barllley
+GitHub: https://github.com/4Raus и https://github.com/barllley
 ```
 
 ### Для связи
@@ -771,8 +769,6 @@ Figma: [указать ссылку на макет]
 
 ```txt
 GitHub Issues: https://github.com/4Raus/GridiFy/issues
-Email: [указать email]
-Telegram: [указать Telegram]
 ```
 
 ---
